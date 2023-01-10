@@ -57,4 +57,28 @@ describe Application do
       expect(response.body).to eq(expected_response)
     end
   end
+
+  context "GET /albums/:id for id = 1" do
+    it "contains h1 title" do
+      response = get('/albums/1')
+      expect(response.body).to include("<h1>Doolittle</h1>")
+    end
+    it "contains paragraph" do
+      response = get('/albums/1')
+      regex = "<p>\n      Release year: 1989\n      Artist: Pixies\n    </p>"
+      expect(response.body).to match(regex)
+    end
+  end
+  context "GET /albums/:id for id = 2" do
+    it "contains h1 title" do
+      response = get('/albums/2')
+      expect(response.body).to include("<h1>Surfer Rosa</h1>")
+    end
+    it "contains paragraph" do
+      p response = get('/albums/2')
+      regex = "<p>\n      Release year: 1988\n      Artist: Pixies\n    </p>"
+      expect(response.body).to match(regex)
+    end
+  end
 end
+
