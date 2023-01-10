@@ -14,14 +14,10 @@ class Application < Sinatra::Base
     also_reload 'lib/artist_repository'
   end
 
-  get '/albums' do
+  get '/albums_divs' do
     album_repository = AlbumRepository.new
-    albums = []
-    album_repository.all.each do |record|
-      album = record.title
-      albums << album
-    end
-    return albums.join(", ")
+    @albums = album_repository.all
+    return erb(:albums)
   end
 
   get '/albums/:id' do
@@ -34,7 +30,7 @@ class Application < Sinatra::Base
     @title = album.title
     @release_year = album.release_year
     @artist = artist.name
-    return erb(:albums)
+    return erb(:album)
   end
 
   post '/albums' do

@@ -1,0 +1,8 @@
+GET http://localhost:9292/albums_divs
+Accept: text/html
+###
+GET http://localhost:9292/albums/2
+Content-Type: text/html
+###
+GET http://localhost:9292/albums/1
+Content-Type: text/html
