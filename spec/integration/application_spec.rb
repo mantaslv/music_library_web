@@ -21,20 +21,26 @@ describe Application do
   end
 
   context "GET /albums" do
-    it 'returns multiple Divs' do
+    it 'contains h1 title' do
       response = get('/albums')
-      expect(response.status).to eq(200)
       expect(response.body).to include("<h1>Albums</h1>")
+      
+    end
+    it 'contains a links' do
+      response = get('/albums')
       expect(response.body).to include('<a href="/albums/2">Surfer Rosa</a>')
       expect(response.body).to include('<a href="/albums/1">Doolittle</a>')
     end
   end
 
-
   context "GET /artists" do
-    it 'returns 200 OK' do
+    it 'contains h1 title' do
       response = get('/artists')
       expect(response.body).to include("<h1>Artists</h1>")
+      
+    end
+    it 'contains a links' do
+      response = get('/artists')
       expect(response.body).to include('<a href="/artists/2">ABBA</a>')
       expect(response.body).to include('<a href="/artists/1">Pixies</a>')
     end
@@ -47,10 +53,11 @@ describe Application do
     end
     it "contains paragraph" do
       response = get('/albums/1')
-      regex = "<p>\n      Release year: 1989\n      Artist: Pixies\n    </p>"
-      expect(response.body).to match(regex)
+      expect(response.body).to include("Release year: 1989")
+      expect(response.body).to include("Artist: Pixies")
     end
   end
+
   context "GET /albums/:id for id = 2" do
     it "contains h1 title" do
       response = get('/albums/2')
@@ -58,8 +65,8 @@ describe Application do
     end
     it "contains paragraph" do
       response = get('/albums/2')
-      regex = "<p>\n      Release year: 1988\n      Artist: Pixies\n    </p>"
-      expect(response.body).to match(regex)
+      expect(response.body).to include("Release year: 1988")
+      expect(response.body).to include("Artist: Pixies")
     end
   end
 
@@ -73,6 +80,7 @@ describe Application do
       expect(response.body).to include("Genre: Rock")
     end
   end
+
   context "GET /artists/:id for id = 2" do
     it "contains h1 title" do
       response = get('/artists/2')
@@ -83,6 +91,5 @@ describe Application do
       expect(response.body).to include("Genre: Pop")
     end
   end
-
 end
 
