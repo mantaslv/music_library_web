@@ -91,5 +91,72 @@ describe Application do
       expect(response.body).to include("Genre: Pop")
     end
   end
-end
 
+  context "GET /albums/new" do
+    it "returns the form page" do
+      response = get('/albums/new')
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Add an Album</h1>")
+
+      expect(response.body).to include('<form action="/albums" method="POST">')
+    end
+  end
+
+  context "POST /albums" do
+    it 'returns a success page' do
+      response = post(
+        '/albums',
+        title: 'Voyage',
+        release_year: 2022,
+        artist_id: 2
+      )
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<p>Your album has been added!</p>')
+    end
+
+    it 'responds with 400 status if parameters are invalid' do
+      response = post(
+        '/albums',
+        title: 'Voyage',
+        release_year: 2022,
+        artist_id: nil
+      )
+
+      expect(response.status).to eq 400
+    end
+  end
+
+  context "GET /artists/new" do
+    it "returns the form page" do
+      response = get('/artists/new')
+      expect(response.status).to eq(200)
+      expect(response.body).to include("<h1>Add an Artist</h1>")
+
+      expect(response.body).to include('<form action="/artists" method="POST">')
+    end
+  end
+
+  context "POST /artists" do
+    it 'returns a success page' do
+      response = post(
+        '/artists',
+        name: 'Fred Again',
+        genre: 'Dance'
+      )
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<p>Your artist has been added!</p>')
+    end
+
+    it 'responds with 400 status if parameters are invalid' do
+      response = post(
+        '/artists',
+        title: 'Voyage',
+        genre: nil
+      )
+
+      expect(response.status).to eq 400
+    end
+  end
+end
